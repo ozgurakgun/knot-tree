@@ -55,14 +55,6 @@ insert x t = if x <= value t
                     case rightChild t of
                         Nothing -> result where result = t { rightChild = Just $ setParent result (singleton x) }
                         Just ch -> result where result = t { rightChild = Just $ insert x ch }
--- insert x t@(KnotBinTree _ Nothing _ v) | x <= v = result
---     where result = t { leftChild = Just $ setParent result (singleton x) }
--- insert x t@(KnotBinTree _ (Just l) _ v) | x <= v = result
---     where result = t { leftChild = Just $ insert x l }
--- insert x t@(KnotBinTree _ _ Nothing v) | x > v = result
---     where result = t { rightChild = Just $ setParent result (singleton x) }
--- insert x t@(KnotBinTree _ _ (Just l) v) | x > v = result
---     where result = t { rightChild = Just $ insert x l }
 
 search :: Ord a => a -> KnotBinTree a -> Maybe (KnotBinTree a)
 search x t = case x `compare` value t of
