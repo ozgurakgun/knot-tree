@@ -105,8 +105,8 @@ qcAll = do
     quickCheck ( prop_insertMember :: Int -> (Int,[Int]) -> Bool )
     quickCheck ( prop_pathTos      :: Int -> (Int,[Int]) -> Bool )
 
-main :: IO ()
-main = do
+runCriterion :: IO ()
+runCriterion = do
     let
         rand :: IO Int
         rand = getRandomR (0,10000)
@@ -114,10 +114,9 @@ main = do
         nb :: Int
         nb = 10000
 
-    top     <- rand
-    stuff   <- sequence $ replicate nb rand
-    needles <- map (stuff!!) <$> sequence (replicate 5 $ getRandomR (0,nb-1))
-    let tree = fromList (top,stuff)
+    (top:stuff) <- sequence $ replicate nb rand
+    let tree    =  fromList (top,stuff)
+    needles     <- map (stuff!!) <$> sequence (replicate 5 $ getRandomR (0,nb-1))
     deepseq (needles,tree) $ defaultMain $ concat
         [ [ bench ("pathTo' " ++ show needle) $ nf (uncurry pathTo') (needle,tree)
           , bench ("pathTo  " ++ show needle) $ nf (uncurry pathTo ) (needle,tree)
