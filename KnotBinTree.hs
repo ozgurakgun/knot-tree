@@ -50,11 +50,11 @@ insert x t = if x <= value t
                 then -- left
                     case leftChild t of
                         Nothing -> result where result = t { leftChild = Just $ setParent result (singleton x) }
-                        Just ch -> result where result = t { leftChild = Just $ insert x ch }
+                        Just ch -> result where result = t { leftChild = Just $ setParent result (insert x ch) }
                 else -- right
                     case rightChild t of
                         Nothing -> result where result = t { rightChild = Just $ setParent result (singleton x) }
-                        Just ch -> result where result = t { rightChild = Just $ insert x ch }
+                        Just ch -> result where result = t { rightChild = Just $ setParent result (insert x ch) }
 
 search :: Ord a => a -> KnotBinTree a -> Maybe (KnotBinTree a)
 search x t = case x `compare` value t of
