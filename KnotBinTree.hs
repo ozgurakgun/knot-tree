@@ -28,7 +28,7 @@ instance Show a => Show (KnotBinTree a) where
     show = show . prettyKnotBinTree . Just
 
 instance NFData a => NFData (KnotBinTree a) where
-    rnf t = rnf (leftChild t, rightChild t, value)
+    rnf t = rnf (leftChild t, rightChild t, value t)
 
 singleton :: a -> KnotBinTree a
 singleton = KnotBinTree Nothing Nothing Nothing
